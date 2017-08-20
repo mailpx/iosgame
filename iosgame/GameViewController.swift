@@ -16,9 +16,12 @@ class GameViewController: UIViewController {
     
     var playerNode: SCNNode!
     
+    var spawnTime: TimeInterval = 0
+    
     var speed: Float = 2
     
     var pause = false
+    var won = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +41,11 @@ class GameViewController: UIViewController {
         scnView.delegate = self
         
         scnView.showsStatistics = true
-        //scnView.allowsCameraControl = true
-        //scnView.autoenablesDefaultLighting = true
         
         scnView.isPlaying = true
         scnScene.physicsWorld.contactDelegate = self
         
-        overlay = OverlayView(size: self.view.bounds.size)
+        overlay = OverlayView(size: self.view.bounds.size, game: self)
         scnView.overlaySKScene = overlay
     }
     
@@ -204,6 +205,11 @@ class GameViewController: UIViewController {
     func setUpPlayerNode() {
         let player = SCNSphere(radius: 1)
         
+        let data = DataManager()
+        let playerMaterial = SCNMaterial()
+        playerMaterial.diffuse.contents = data.getColor()
+        player.materials = [playerMaterial]
+        
         playerNode = SCNNode()
         playerNode.position = SCNVector3(2,1.5,15)
         playerNode.geometry = player
@@ -293,15 +299,23 @@ extension GameViewController: SCNSceneRendererDelegate, SCNPhysicsContactDelegat
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time:
         TimeInterval) {
         
-        if playerNode.position.z < -950 {
-            overlay.won(text: "ｙｏｕ ｗｏｎ", point: 3)
+        if time > spawnTime {
+            spawnTime = time + TimeInterval(0.1)
+        
+            if playerNode.position.z < -950 && !won {
+                overlay.won(text: "ｙｏｕ ｗｏｎ", point: 3)
+                won = true
+            
+                let data = DataManager()
+                data.addPoints(points: 3)
+            }
+            if overlay.pause {
+                return
+            }
+            playerNode.position.z -= speed
+            verticalCameraNode.position.z -= speed
+            horizontalCameraNode.position.z -= speed
         }
-        if overlay.pause {
-            return
-        }
-        playerNode.position.z -= speed
-        verticalCameraNode.position.z -= speed
-        horizontalCameraNode.position.z -= speed
     }
 }
 

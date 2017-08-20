@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843FAF231F49751900292D8B /* HowToPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAF221F49751900292D8B /* HowToPlayViewController.swift */; };
+		843FAF251F497CB800292D8B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAF241F497CB800292D8B /* DataManager.swift */; };
 		847CEAF01F45D71C003CC530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CEAEF1F45D71C003CC530 /* AppDelegate.swift */; };
 		847CEAF71F45D71C003CC530 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847CEAF51F45D71C003CC530 /* Main.storyboard */; };
 		847CEAFC1F45D71C003CC530 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847CEAFA1F45D71C003CC530 /* LaunchScreen.storyboard */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		843FAF221F49751900292D8B /* HowToPlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowToPlayViewController.swift; sourceTree = "<group>"; };
+		843FAF241F497CB800292D8B /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		847CEAEF1F45D71C003CC530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		847CEAF61F45D71C003CC530 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		847CEAFB1F45D71C003CC530 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,7 +41,7 @@
 		847CEB0C1F45D8B2003CC530 /* ShopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
 		847CEB171F45DAD2003CC530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		847CEB191F45DBBE003CC530 /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
-		84E667641F45E074003EDC0A /* iosgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosgame.app; path = "/Users/admin/Desktop/untitled folder/iosgame/build/Debug-iphoneos/iosgame.app"; sourceTree = "<absolute>"; };
+		84DA403C1F49B60F0063CC08 /* iosgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosgame.app; path = "/Users/admin/Desktop/iosgame/build/Debug-iphoneos/iosgame.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				847CEB0A1F45D8B2003CC530 /* OverlayView.swift */,
 				847CEB0B1F45D8B2003CC530 /* PauseButtonNode.swift */,
 				847CEB0C1F45D8B2003CC530 /* ShopViewController.swift */,
+				843FAF221F49751900292D8B /* HowToPlayViewController.swift */,
+				843FAF241F497CB800292D8B /* DataManager.swift */,
 				847CEB051F45D8B2003CC530 /* Colors.swift */,
 				847CEAF51F45D71C003CC530 /* Main.storyboard */,
 				847CEAFA1F45D71C003CC530 /* LaunchScreen.storyboard */,
@@ -96,7 +102,7 @@
 			);
 			name = iosgame;
 			productName = iosgame;
-			productReference = 84E667641F45E074003EDC0A /* iosgame.app */;
+			productReference = 84DA403C1F49B60F0063CC08 /* iosgame.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -153,10 +159,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				847CEB161F45D8B2003CC530 /* ShopViewController.swift in Sources */,
+				843FAF251F497CB800292D8B /* DataManager.swift in Sources */,
 				847CEB121F45D8B2003CC530 /* GameViewController.swift in Sources */,
 				847CEB151F45D8B2003CC530 /* PauseButtonNode.swift in Sources */,
 				847CEB131F45D8B2003CC530 /* MainMenuViewController.swift in Sources */,
 				847CEAF01F45D71C003CC530 /* AppDelegate.swift in Sources */,
+				843FAF231F49751900292D8B /* HowToPlayViewController.swift in Sources */,
 				847CEB141F45D8B2003CC530 /* OverlayView.swift in Sources */,
 				847CEB111F45D8B2003CC530 /* GameButtonNode.swift in Sources */,
 				847CEB0F1F45D8B2003CC530 /* Colors.swift in Sources */,

@@ -4,7 +4,10 @@ import UIKit
 
 class ShopViewController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    let data: DataManager! = DataManager()
     let colors: Colors! = Colors()
+    
+    var pointsLabel: UILabel!
     
     override func viewDidLoad() {
         
@@ -12,6 +15,10 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
+        
+        createRetrunButton()
+        
+        createPointsLabel()
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: screenHeight*0.05, left: screenWidth*0.1, bottom: screenHeight*0.1, right: screenWidth*0.05)
@@ -33,42 +40,131 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         
     }
     
+    func createRetrunButton() {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        
+        let returnButton = UIButton()
+        returnButton.setTitle("ｒｅｔｕｒｎ", for: .normal)
+        returnButton.setTitleColor(UIColor.white, for: .normal)
+        returnButton.setTitleColor(UIColor.cyan, for: .highlighted)
+        returnButton.backgroundColor = UIColor.black
+        returnButton.layer.cornerRadius = 2
+        returnButton.addTarget(self, action:#selector(returnToMainMenu(sender:)), for: .touchUpInside)
+        self.view.addSubview(returnButton)
+        
+        returnButton.translatesAutoresizingMaskIntoConstraints = false
+        returnButton.widthAnchor.constraint(equalToConstant: screenWidth*0.3).isActive = true
+        returnButton.heightAnchor.constraint(equalToConstant: screenHeight*0.05).isActive = true
+        NSLayoutConstraint(item: returnButton, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: screenHeight*0.02).isActive = true
+        NSLayoutConstraint(item: returnButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: screenWidth*0.1).isActive = true
+    }
+    
+    func returnToMainMenu(sender: UIButton){
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func createPointsLabel() {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        
+        pointsLabel = UILabel()
+        pointsLabel.text = "ｐｏｉｎｔｓ " + String(data.getPoints())
+
+        self.view.addSubview(pointsLabel)
+        
+        pointsLabel.translatesAutoresizingMaskIntoConstraints = false
+        pointsLabel.widthAnchor.constraint(equalToConstant: screenWidth*0.4).isActive = true
+        pointsLabel.heightAnchor.constraint(equalToConstant: screenHeight*0.05).isActive = true
+        NSLayoutConstraint(item: pointsLabel, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: screenHeight*0.02).isActive = true
+        NSLayoutConstraint(item: pointsLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: screenWidth*0.5).isActive = true
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.colors.count
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath as IndexPath)
-        myCell.layer.borderColor = UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1).cgColor
-        myCell.layer.borderWidth = 3
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath as IndexPath)
+
+        if cell.contentView.subviews.count != 0 {
+            for subview in cell.contentView.subviews {
+                subview.removeFromSuperview()
+            }
+        }
+        
+        cell.layer.borderColor = UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1).cgColor
+        cell.layer.borderWidth = 3
         
         let stack = UIStackView(frame: CGRect(x: 50, y: 0, width: 180, height: 90))
         stack.axis = UILayoutConstraintAxis.horizontal;
         stack.distribution = UIStackViewDistribution.equalCentering;
         stack.alignment = UIStackViewAlignment.center;
-        myCell.addSubview(stack)
+        cell.contentView.addSubview(stack)
         
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        stack.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        NSLayoutConstraint(item: stack, attribute: .topMargin, relatedBy: .equal, toItem: myCell, attribute: .topMargin, multiplier: 1, constant: 5).isActive = true
-        NSLayoutConstraint(item: stack, attribute: .left, relatedBy: .equal, toItem: myCell, attribute: .left, multiplier: 1, constant: 15).isActive = true
+        stack.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        NSLayoutConstraint(item: stack, attribute: .topMargin, relatedBy: .equal, toItem: cell, attribute: .topMargin, multiplier: 1, constant: 5).isActive = true
+        NSLayoutConstraint(item: stack, attribute: .left, relatedBy: .equal, toItem: cell, attribute: .left, multiplier: 1, constant: 15).isActive = true
         
-        let color = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        color.backgroundColor = colors.colors[indexPath.row].color
+        let color = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        color.image = colors.colors[indexPath.row].color
         color.heightAnchor.constraint(equalToConstant: 50).isActive = true
         color.widthAnchor.constraint(equalToConstant: 50).isActive = true
         stack.addArrangedSubview(color)
         
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        button.setTitle("ｂｕｙ", for: .normal)
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        button.tag = indexPath.row + 1
+        if data.isColorBought(colorName: colors.colors[indexPath.row].colorName) {
+            if(data.getSettedColor() == colors.colors[indexPath.row].colorName) {
+                button.setTitle("ｓｅｔｔｅｄ", for: .normal)
+            } else {
+                button.setTitle("ｓｅｔ", for: .normal)
+                button.addTarget(self, action: #selector(setColor(sender:)), for: .touchUpInside)
+            }
+        } else {
+            button.setTitle("ｂｕｙ", for: .normal)
+            button.addTarget(self, action: #selector(buyColor(sender:)), for: .touchUpInside)
+            
+        }
+        
         button.setTitleColor(UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1), for: .normal)
         button.setTitleColor(UIColor.cyan, for: .highlighted)
         button.layer.borderColor = UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1).cgColor
         button.layer.borderWidth = 2
         stack.addArrangedSubview(button)
         
-        return myCell
+        return cell
+    }
+    
+    func setColor(sender: UIButton){
+        
+        if let buttonView = self.view.viewWithTag(colors.getColorIndex(colorName: data.getSettedColor()) + 1) {
+            if buttonView is UIButton {
+                let button = buttonView as! UIButton
+                button.setTitle("ｓｅｔ", for: .normal)
+                button.addTarget(self, action: #selector(setColor(sender:)), for: .touchUpInside)
+            }
+        }
+        
+        data.setColor(colorName: colors.colors[sender.tag - 1].colorName)
+        sender.removeTarget(self, action: #selector(setColor(sender:)), for: .touchUpInside)
+        sender.setTitle("ｓｅｔｔｅｄ", for: .normal)
+    }
+    
+    func buyColor(sender: UIButton){
+        if data.getPoints() >= 3  {
+            data.buyColor(colorName: colors.colors[sender.tag - 1].colorName)
+            data.addPoints(points: -3)
+            
+            sender.removeTarget(self, action: #selector(buyColor(sender:)), for: .touchUpInside)
+            sender.addTarget(self, action: #selector(setColor(sender:)), for: .touchUpInside)
+            sender.setTitle("ｓｅｔ", for: .normal)
+            pointsLabel.text = "ｐｏｉｎｔｓ " + String(data.getPoints())
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)

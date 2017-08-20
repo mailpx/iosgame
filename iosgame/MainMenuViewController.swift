@@ -72,15 +72,15 @@ class MAinMenuViewController : UIViewController {
 
         let b1 = createButton(title: "ｐｌａｙ")
         stack.addArrangedSubview(b1)
+        b1.addTarget(self, action:#selector(game(sender:)), for: .touchUpInside)
         
-        let b2 = createButton(title: "ｏｎｌｉｎｅ")
+        let b2 = createButton(title: "ｈｏｗ ｔｏ ｐｌａｙ")
         stack.addArrangedSubview(b2)
+        b2.addTarget(self, action:#selector(howToPlay(sender:)), for: .touchUpInside)
         
-        let b3 = createButton(title: "ｈｏｗ ｔｏ ｐｌａｙ")
+        let b3 = createButton(title: "ｓｈｏｐ")
         stack.addArrangedSubview(b3)
-        
-        let b4 = createButton(title: "ｓｈｏｐ")
-        stack.addArrangedSubview(b4)
+        b3.addTarget(self, action:#selector(shop(sender:)), for: .touchUpInside)
         
         let space2 = UIView()
         space2.widthAnchor.constraint(equalToConstant: screenWidth*0.05).isActive = true
@@ -114,6 +114,18 @@ class MAinMenuViewController : UIViewController {
         button.layer.insertSublayer(shadow, at: 0)
         
         return button
+    }
+    
+    func game(sender: UIButton){
+        performSegue(withIdentifier: "game", sender: nil)
+    }
+    
+    func howToPlay(sender: UIButton){
+        performSegue(withIdentifier: "howtoplay", sender: nil)
+    }
+    
+    func shop(sender: UIButton){
+        performSegue(withIdentifier: "shop", sender: nil)
     }
     
     override var shouldAutorotate: Bool {

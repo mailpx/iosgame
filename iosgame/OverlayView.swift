@@ -12,7 +12,7 @@ class OverlayView : SKScene {
     var start = true
     var pause = false
     
-    override init(size: CGSize) {
+    init(size: CGSize, game: UIViewController) {
         super.init(size: size)
         
         self.backgroundColor = UIColor.clear
@@ -60,9 +60,7 @@ class OverlayView : SKScene {
         menu.addChild(continueButton)
         
         returnButton = GameButtonNode(size: size, text: "ｒｅｔｕｒｎ", fontSize: fontSize, callback: {() in
-            self.pause = !self.pause
-            self.pauseNode.start()
-            self.menu.isHidden = true
+            game.dismiss(animated: true, completion: nil)
         })
         returnButton.position = CGPoint(x: 0, y: -continueButton.frame.height)
         menu.addChild(returnButton)
@@ -78,18 +76,15 @@ class OverlayView : SKScene {
         continueButton.removeFromParent()
         pauseNode.removeFromParent()
         
-        let scoreNode = SKLabelNode(text: "ｙｏｕ ｇａｉｎｅｄ " + String(point))
-        let scoreScalingFactor = min(menu.frame.width / (1.5 * scoreNode.frame.width), menu.frame.height / scoreNode.frame.height)
+        let scoreNode = SKLabelNode(text: "ｙｏｕ ｇａｉｎｅｄ " + String(point) + " ｐｏｉｎｔｓ")
+        scoreNode.fontName = "HelveticaNeue"
+        let scoreScalingFactor = min(menu.frame.width / (scoreNode.frame.width), menu.frame.height / scoreNode.frame.height)
         scoreNode.fontSize *= scoreScalingFactor
         scoreNode.position = CGPoint(x: 0, y: scoreNode.frame.height / 2.0)
         menu.addChild(scoreNode)
         
-        let points = SKSpriteNode(imageNamed: "game.scnassets/Textures/triangle.png")
-        points.size = CGSize(width: scoreNode.fontSize * 2, height: scoreNode.fontSize * 2)
-        points.position = CGPoint(x: scoreNode.frame.width / 2.0 + points.frame.width / 2, y: scoreNode.frame.height / 2.0 + points.frame.height / 4)
-        menu.addChild(points)
-        
         let textNode = SKLabelNode(text: text)
+        textNode.fontName = "HelveticaNeue"
         let scalingFactor = min(menu.frame.width / (1.2 * textNode.frame.width), menu.frame.height / textNode.frame.height)
         textNode.fontSize *= scalingFactor
         textNode.position = CGPoint(x: 0, y: 2 * scoreNode.frame.height + textNode.frame.height / 2)
