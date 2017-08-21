@@ -1,16 +1,35 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 class MAinMenuViewController : UIViewController {
     
+    var player: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        
         setupBackground()
         
         setupStackView()
+        
+        guard let url = Bundle.main.url(forResource: "game.scnassets/Sounds/sound2", withExtension: "mp3") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func setupBackground() {
@@ -23,7 +42,11 @@ class MAinMenuViewController : UIViewController {
         layer.colors = gradientColors
         layer.startPoint = CGPoint(x: 0.0, y: 0.5)
         layer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        layer.frame = self.view.bounds
+        if self.view.bounds.height > self.view.bounds.width {
+            layer.frame = self.view.bounds
+        } else {
+            layer.frame = CGRect(x: 0, y: 0, width: self.view.bounds.height, height: self.view.bounds.width)
+        }
         
         self.view.layer.insertSublayer(layer, at: 0)
     }
@@ -129,14 +152,6 @@ class MAinMenuViewController : UIViewController {
     }
     
     override var shouldAutorotate: Bool {
-        get {
-            return false
-        }
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        get {
-            return .portrait
-        }
+        return true
     }
 }

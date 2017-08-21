@@ -41,7 +41,7 @@
 		847CEB0C1F45D8B2003CC530 /* ShopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
 		847CEB171F45DAD2003CC530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		847CEB191F45DBBE003CC530 /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
-		84DA403C1F49B60F0063CC08 /* iosgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosgame.app; path = "/Users/admin/Desktop/iosgame/build/Debug-iphoneos/iosgame.app"; sourceTree = "<absolute>"; };
+		84E6DD481F4B250000287AA4 /* iosgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosgame.app; path = "/Users/admin/Desktop/iosgame/build/Debug-iphoneos/iosgame.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +69,8 @@
 				847CEAEF1F45D71C003CC530 /* AppDelegate.swift */,
 				847CEB071F45D8B2003CC530 /* GameButtonNode.swift */,
 				847CEB081F45D8B2003CC530 /* GameViewController.swift */,
-				847CEB091F45D8B2003CC530 /* MainMenuViewController.swift */,
 				847CEB0A1F45D8B2003CC530 /* OverlayView.swift */,
+				847CEB091F45D8B2003CC530 /* MainMenuViewController.swift */,
 				847CEB0B1F45D8B2003CC530 /* PauseButtonNode.swift */,
 				847CEB0C1F45D8B2003CC530 /* ShopViewController.swift */,
 				843FAF221F49751900292D8B /* HowToPlayViewController.swift */,
@@ -102,7 +102,7 @@
 			);
 			name = iosgame;
 			productName = iosgame;
-			productReference = 84DA403C1F49B60F0063CC08 /* iosgame.app */;
+			productReference = 84E6DD481F4B250000287AA4 /* iosgame.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -217,6 +217,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_ACTIVITY_MODE = "";
+				"DEBUG_ACTIVITY_MODE[sdk=iphonesimulator*]" = disable;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -268,6 +270,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_ACTIVITY_MODE = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

@@ -1,6 +1,7 @@
 import UIKit
 import SceneKit
 import SpriteKit
+import AVFoundation
 
 class GameViewController: UIViewController {
     var scnView:SCNView!
@@ -20,6 +21,8 @@ class GameViewController: UIViewController {
     
     var speed: Float = 2
     
+    var player: AVAudioPlayer?
+    
     var pause = false
     var won = false
     
@@ -34,6 +37,10 @@ class GameViewController: UIViewController {
         setUpPlayerNode()
         
         scnView.scene = scnScene
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        overlay.startReady()
     }
     
     func setupScene() {
@@ -199,7 +206,17 @@ class GameViewController: UIViewController {
     }
     
     func setupSounds() {
+        guard let url = Bundle.main.url(forResource: "game.scnassets/Sounds/sound1", withExtension: "mp3") else { return }
         
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func setUpPlayerNode() {
@@ -211,7 +228,7 @@ class GameViewController: UIViewController {
         player.materials = [playerMaterial]
         
         playerNode = SCNNode()
-        playerNode.position = SCNVector3(2,1.5,15)
+        playerNode.position = SCNVector3(0,1.5,15)
         playerNode.geometry = player
         playerNode.name = "player"
         playerNode.physicsBody = SCNPhysicsBody.kinematic()
@@ -308,6 +325,8 @@ extension GameViewController: SCNSceneRendererDelegate, SCNPhysicsContactDelegat
             
                 let data = DataManager()
                 data.addPoints(points: 3)
+                
+                player?.play()
             }
             if overlay.pause {
                 return

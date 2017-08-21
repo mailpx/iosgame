@@ -7,6 +7,8 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
     let data: DataManager! = DataManager()
     let colors: Colors! = Colors()
     
+    let price = 3
+    
     var pointsLabel: UILabel!
     
     override func viewDidLoad() {
@@ -19,6 +21,8 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         createRetrunButton()
         
         createPointsLabel()
+        
+        data.buyColor(colorName: colors.colors[0].colorName)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: screenHeight*0.05, left: screenWidth*0.1, bottom: screenHeight*0.1, right: screenWidth*0.05)
@@ -54,7 +58,7 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         self.view.addSubview(returnButton)
         
         returnButton.translatesAutoresizingMaskIntoConstraints = false
-        returnButton.widthAnchor.constraint(equalToConstant: screenWidth*0.3).isActive = true
+        returnButton.widthAnchor.constraint(equalToConstant: screenWidth*0.35).isActive = true
         returnButton.heightAnchor.constraint(equalToConstant: screenHeight*0.05).isActive = true
         NSLayoutConstraint(item: returnButton, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: screenHeight*0.02).isActive = true
         NSLayoutConstraint(item: returnButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: screenWidth*0.1).isActive = true
@@ -69,7 +73,7 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         let screenHeight = UIScreen.main.bounds.height
         
         pointsLabel = UILabel()
-        pointsLabel.text = "ｐｏｉｎｔｓ " + String(data.getPoints())
+        pointsLabel.text = String(data.getPoints()) + " ｐｏｉｎｔｓ"
 
         self.view.addSubview(pointsLabel)
         
@@ -116,7 +120,7 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         color.widthAnchor.constraint(equalToConstant: 50).isActive = true
         stack.addArrangedSubview(color)
         
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         button.tag = indexPath.row + 1
         if data.isColorBought(colorName: colors.colors[indexPath.row].colorName) {
             if(data.getSettedColor() == colors.colors[indexPath.row].colorName) {
@@ -126,7 +130,11 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
                 button.addTarget(self, action: #selector(setColor(sender:)), for: .touchUpInside)
             }
         } else {
-            button.setTitle("ｂｕｙ", for: .normal)
+            button.setTitle("ｂｕｙ ｗｉｔｈ " + String(price) + " ｐｏｉｎｔｓ", for: .normal)
+            button.titleLabel?.minimumScaleFactor = 0.5
+            button.titleLabel?.numberOfLines = 0
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            button.contentEdgeInsets = UIEdgeInsetsMake(25, 0, 25, 0)
             button.addTarget(self, action: #selector(buyColor(sender:)), for: .touchUpInside)
             
         }
@@ -135,6 +143,7 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
         button.setTitleColor(UIColor.cyan, for: .highlighted)
         button.layer.borderColor = UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1).cgColor
         button.layer.borderWidth = 2
+        
         stack.addArrangedSubview(button)
         
         return cell
@@ -156,31 +165,23 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func buyColor(sender: UIButton){
-        if data.getPoints() >= 3  {
+        if data.getPoints() >= price  {
             data.buyColor(colorName: colors.colors[sender.tag - 1].colorName)
-            data.addPoints(points: -3)
+            data.addPoints(points: -price)
             
             sender.removeTarget(self, action: #selector(buyColor(sender:)), for: .touchUpInside)
             sender.addTarget(self, action: #selector(setColor(sender:)), for: .touchUpInside)
             sender.setTitle("ｓｅｔ", for: .normal)
-            pointsLabel.text = "ｐｏｉｎｔｓ " + String(data.getPoints())
+            sender.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+            pointsLabel.text = String(data.getPoints()) + " ｐｏｉｎｔｓ"
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-    {
-        print("User tapped on item \(indexPath.row)")
     }
     
     override var shouldAutorotate: Bool {
-        get {
-            return false
-        }
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        get {
-            return .portrait
-        }
+        return .portrait
     }
 }

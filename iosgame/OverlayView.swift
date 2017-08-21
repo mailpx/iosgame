@@ -8,8 +8,8 @@ class OverlayView : SKScene {
     var menu: SKShapeNode!
     var continueButton: GameButtonNode!
     var returnButton: GameButtonNode!
+    var readyLabel: SKLabelNode!
     
-    var start = true
     var pause = false
     
     init(size: CGSize, game: UIViewController) {
@@ -22,7 +22,6 @@ class OverlayView : SKScene {
             spriteSize = size.width/8
         }else{
             spriteSize = size.height/8
-            start = false
         }
         self.pauseNode = PauseButtonNode(spriteSize: spriteSize, callback: {(pause: Bool) in
                 self.pause = pause
@@ -30,6 +29,7 @@ class OverlayView : SKScene {
         })
         self.pauseNode.position = CGPoint(x: spriteSize + 8, y: spriteSize + 8)
         self.addChild(self.pauseNode)
+        pauseNode.isHidden = true
         
         let smenuSize : CGSize
         if (size.height > size.width){
@@ -42,6 +42,7 @@ class OverlayView : SKScene {
         menu.fillTexture = SKTexture.init(image: UIImage(named: "game.scnassets/Textures/gp.png")!)
         menu.strokeColor = UIColor.clear
         menu.position = CGPoint(x: size.width/2, y: size.height/2)
+        
         self.addChild(menu)
         
         let fontSize : CGFloat
@@ -70,6 +71,37 @@ class OverlayView : SKScene {
         self.scaleMode = .resizeFill
         self.isUserInteractionEnabled = false
         
+        pause = true
+        
+    }
+    
+    func startReady() {
+        readyLabel = SKLabelNode()
+        readyLabel.horizontalAlignmentMode = .center
+        readyLabel.verticalAlignmentMode = .baseline
+        readyLabel.position = CGPoint(x: size.width/2, y: size.height/2)
+        readyLabel.fontName = "HelveticaNeue"
+        readyLabel.fontColor = SKColor.black
+        readyLabel.fontSize = size.height / 30
+        readyLabel.zPosition = 100
+        readyLabel.text = "ｒｅａｄｙ"
+        
+        self.addChild(readyLabel)
+        
+        let start = SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(startAction)])
+        
+        run(SKAction.sequence([SKAction.repeat(start, count: 2), SKAction.run(endCountdown)]))
+        
+    }
+    
+    func startAction() {
+        readyLabel.text = "ｓｔａｒｔ"
+    }
+    
+    func endCountdown() {
+        readyLabel.removeFromParent()
+        pauseNode.isHidden = false
+        pause = false
     }
     
     func won(text: String, point: Int) {
