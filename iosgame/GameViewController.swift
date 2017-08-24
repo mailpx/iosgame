@@ -26,6 +26,8 @@ class GameViewController: UIViewController {
     var pause = false
     var won = false
     
+    var countHit = 3
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -306,11 +308,23 @@ extension GameViewController: SCNSceneRendererDelegate, SCNPhysicsContactDelegat
             playerNode.position.z += 20
             verticalCameraNode.position.z += 20
             horizontalCameraNode.position.z += 20
+            countHit -= 1
+            overlay.setScoreNode(score: String(countHit <= 0 ? 0:countHit))
+            if(countHit <= 0) {
+                overlay.lost()
+            }
         } else if(bit == 2) {
             speed = 1
+            playerNode.removeAllActions()
+            playerNode.runAction(SCNAction.sequence([SCNAction.wait(duration: 5), SCNAction.run(setspeed)]))
         } else if(bit == 4) {
+            playerNode.removeAllActions()
             speed = 3
         }
+    }
+    
+    func setspeed(node: SCNNode) {
+        speed = 2
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time:
@@ -329,7 +343,10 @@ extension GameViewController: SCNSceneRendererDelegate, SCNPhysicsContactDelegat
                 player?.play()
             }
             if overlay.pause {
+                playerNode.isPaused = true
                 return
+            } else {
+                playerNode.isPaused = false
             }
             playerNode.position.z -= speed
             verticalCameraNode.position.z -= speed

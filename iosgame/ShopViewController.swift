@@ -139,9 +139,9 @@ class ShopViewController : UIViewController, UICollectionViewDataSource, UIColle
             
         }
         
-        button.setTitleColor(UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1), for: .normal)
+        button.setTitleColor(UIColor(red: 0.93, green: 0.78, blue:0.83, alpha: 1), for: .normal)
         button.setTitleColor(UIColor.cyan, for: .highlighted)
-        button.layer.borderColor = UIColor(red: 0.98, green: 0.83, blue:0.88, alpha: 1).cgColor
+        button.layer.borderColor = UIColor(red: 0.93, green: 0.78, blue:0.83, alpha: 1).cgColor
         button.layer.borderWidth = 2
         
         stack.addArrangedSubview(button)

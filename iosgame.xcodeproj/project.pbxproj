@@ -41,7 +41,7 @@
 		847CEB0C1F45D8B2003CC530 /* ShopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
 		847CEB171F45DAD2003CC530 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		847CEB191F45DBBE003CC530 /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
-		84E6DD481F4B250000287AA4 /* iosgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosgame.app; path = "/Users/admin/Desktop/iosgame/build/Debug-iphoneos/iosgame.app"; sourceTree = "<absolute>"; };
+		84B8C4271F4EC23E00D257F9 /* iosgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosgame.app; path = "/Users/admin/Desktop/iosgame/build/Debug-iphoneos/iosgame.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +102,7 @@
 			);
 			name = iosgame;
 			productName = iosgame;
-			productReference = 84E6DD481F4B250000287AA4 /* iosgame.app */;
+			productReference = 84B8C4271F4EC23E00D257F9 /* iosgame.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
